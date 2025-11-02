@@ -1,23 +1,33 @@
+import express from "express";
+import cors from "cors";
 import mysql from "mysql2";
 import dotenv from "dotenv";
+
 dotenv.config();
 
-const connection = mysql.createConnection({
+const app = express();
+const port = process.env.PORT || 8080;
+
+app.use(cors());
+app.use(express.json());
+
+// ======================================================
+// ✅ DATABASE CONNECTION
+// ======================================================
+const db = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
+  password: process.env.DB_PASS,
   database: process.env.DB_NAME,
 });
 
-connection.connect((err) => {
+db.connect((err) => {
   if (err) {
-    console.error("Database connection failed:", err);
+    console.error("❌ Database connection failed:", err);
   } else {
-    console.log("Connected to MySQL successfully!");
+    console.log("✅ Connected to MySQL successfully!");
   }
 });
-
-export default connection;
 
 // =================================================================
 // --- API ROUTES (CRUD for Patients) ---
@@ -654,3 +664,4 @@ app.post("/api/chatbot", (req, res) => {
 app.listen(port, () => {
   console.log(`🚀 Server running at http://localhost:${port}`);
 });
+export default app;
