@@ -1,34 +1,23 @@
-const express = require("express");
-const mysql = require("mysql2");
-const cors = require("cors");
+import mysql from "mysql2";
+import dotenv from "dotenv";
+dotenv.config();
 
-const app = express();
-const port = 3001; // Port for your backend server
-
-// --- Middleware ---
-app.use(cors()); // Allow cross-origin requests
-app.use(express.json()); // Parse incoming JSON request bodies
-
-// --- MySQL Connection ---
-const db = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "Krish@1707",
-  database: "hospital_db",
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0,
+const connection = mysql.createConnection({
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 });
 
-// Test the database connection
-db.getConnection((err, connection) => {
+connection.connect((err) => {
   if (err) {
-    console.error("Error connecting to MySQL:", err.stack);
-    return;
+    console.error("Database connection failed:", err);
+  } else {
+    console.log("Connected to MySQL successfully!");
   }
-  console.log("✅ Connected to MySQL as ID", connection.threadId);
-  connection.release();
 });
+
+export default connection;
 
 // =================================================================
 // --- API ROUTES (CRUD for Patients) ---
