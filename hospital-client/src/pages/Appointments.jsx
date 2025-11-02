@@ -32,9 +32,10 @@ export default function Appointments() {
     setLoading(true)
     try {
       const [appointmentsRes, patientsRes, doctorsRes] = await Promise.all([
-        axios.get('http://localhost:3001/api/appointments'),
-        axios.get('http://localhost:3001/api/patients'),
-        axios.get('http://localhost:3001/api/doctors')
+        axios.get("https://adequate-reflection-production.up.railway.app/api/appointments"),
+        axios.get("https://adequate-reflection-production.up.railway.app/api/patients"),
+        axios.get("https://adequate-reflection-production.up.railway.app/api/doctors")
+
       ])
       setAppointments(appointmentsRes.data)
       setPatients(patientsRes.data)
@@ -51,10 +52,10 @@ export default function Appointments() {
     try {
       if (editingAppointment) {
         // Use editingAppointment.id (which your backend query provides as 'a.id')
-        await axios.put(`http://localhost:3001/api/appointments/${editingAppointment.id}`, form)
+        await axios.put(`https://adequate-reflection-production.up.railway.app/api/appointments/${editingAppointment.id}`, form)        
         alert('Appointment updated successfully!')
       } else {
-        await axios.post('http://localhost:3001/api/appointments', form)
+        await axios.post('https://adequate-reflection-production.up.railway.app/api/appointments', form)        
         alert('Appointment booked successfully!')
       }
       setForm({ patientid: '', doctorid: '', appointmentdate: '', reason: '' })
@@ -69,7 +70,7 @@ export default function Appointments() {
 
   function deleteAppointment(id) {
     if (!confirm('Cancel this appointment?')) return
-    axios.delete(`http://localhost:3001/api/appointments/${id}`)
+      axios.delete(`https://adequate-reflection-production.up.railway.app/api/appointments/${id}`)
       .then(() => {
         fetchData()
         alert('Appointment cancelled successfully!')

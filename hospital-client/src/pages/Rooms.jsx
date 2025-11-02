@@ -26,8 +26,8 @@ export default function Rooms() {
     setLoading(true)
     try {
       const [roomsRes, patientsRes] = await Promise.all([
-        axios.get('http://localhost:3001/api/rooms'),
-        axios.get('http://localhost:3001/api/patients')
+        axios.get('https://adequate-reflection-production.up.railway.app/api/rooms'),
+        axios.get('https://adequate-reflection-production.up.railway.app/api/patients')
       ])
       setRooms(roomsRes.data)
       setPatients(patientsRes.data)
@@ -52,7 +52,7 @@ export default function Rooms() {
     try {
       const newAvailability = selectedRoom.Availability - 1
       
-      await axios.put(`http://localhost:3001/api/rooms/${selectedRoom.Room_no}`, {
+      await axios.put(`https://adequate-reflection-production.up.railway.app/api/rooms/${selectedRoom.Room_no}`, {
         Availability: newAvailability
       })
       

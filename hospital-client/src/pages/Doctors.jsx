@@ -3,7 +3,7 @@ import axios from 'axios';
 
 // Set the base URL for your API.
 // Change this if your server is on a different port.
-const API_BASE_URL = 'http://localhost:3001';
+const API_BASE_URL = 'https://adequate-reflection-production.up.railway.app';
 
 export default function Doctors() {
   const [doctors, setDoctors] = useState([]);
